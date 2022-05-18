@@ -4,16 +4,16 @@
     alt="MiTek Logo"
     src="assets/kovalogo_big.png"
   />
-    <button>Home</button>
+    <app-button text="Home"></app-button>
     <div class="spacer"></div>
-    <button>Register</button>
-    <button>Sign in</button>
+    <app-button text="Register"></app-button>
+    <app-button text="Sign in" (click)="signIn()"></app-button>
 </div>
 
 <div class="content" role="main">
 
-  <h1>Welcome, please sign in</h1>
-  <h1>Hello [your name], you've logged in</h1>
+  <h1 *ngIf="!signedIn">Welcome, please sign in</h1>
+  <h1 *ngIf="signedIn">Hello {{name}}, you've logged in</h1>
 
   <svg id="clouds" xmlns="http://www.w3.org/2000/svg" width="2611.084" height="485.677" viewBox="0 0 2611.084 485.677">
     <title>Gray Clouds Background</title>

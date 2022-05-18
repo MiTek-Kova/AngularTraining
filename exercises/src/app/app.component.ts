@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'exercises';
+  signedIn: boolean = false;
+  name: string = "Brad";
+
+  signIn(): void {
+    this.signedIn = !this.signedIn;
+  }
 }

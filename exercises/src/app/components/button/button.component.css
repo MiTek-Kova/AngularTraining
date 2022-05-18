@@ -1,0 +1,19 @@
+:host {
+    margin: 16px;
+}
+
+button {
+    background-color: transparent;
+    font-size: 20px;
+    font-weight: 500;
+    color: white;
+    border: 0;
+}
+
+button:hover {
+    background-color: blue;
+}
+
+button:active {
+    background-color: darkblue;
+}
