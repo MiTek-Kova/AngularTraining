@@ -10,7 +10,7 @@ export class AppComponent {
   signedIn: boolean = false;
   name: string = "Brad";
 
-  signIn(): void {
-    this.signedIn = !this.signedIn;
+  signedInEvent(value: boolean): void {
+    this.signedIn = value;
   }
 }

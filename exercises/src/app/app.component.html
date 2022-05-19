@@ -1,15 +1,4 @@
-<div class="toolbar" role="banner">
-  <img
-    width="40"
-    alt="MiTek Logo"
-    src="assets/kovalogo_big.png"
-  />
-    <app-button text="Home"></app-button>
-    <div class="spacer"></div>
-    <app-button text="Register"></app-button>
-    <app-button text="Sign in" (click)="signIn()"></app-button>
-</div>
-
+<app-navbar (signedInEvent)="signedInEvent($event)"></app-navbar>
 <div class="content" role="main">
 
   <h1>Hello {{name}}</h1>
