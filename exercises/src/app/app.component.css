@@ -36,3 +36,26 @@
     z-index: -10;
     width: 1920px;
   }
+
+  .signedInStatus {
+    display: flex;
+    gap: 10px;
+  }
+
+  .notSignedIn, .signedIn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 50px;
+    border-radius: 100%;
+    background-color: red;
+  }
+
+  .signedIn {
+    background-color: green;
+  }
+
+  .material-icons {
+    color: white;
+  }
