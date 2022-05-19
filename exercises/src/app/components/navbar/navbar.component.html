@@ -7,5 +7,5 @@
       <app-button text="Home"></app-button>
       <div class="spacer"></div>
       <app-button text="Register"></app-button>
-      <app-button text="Sign in" (click)="signIn()"></app-button>
+      <app-button [text]="!signedIn ? 'Sign in' : 'Sign out'" (click)="signIn()"></app-button>
   </div>
