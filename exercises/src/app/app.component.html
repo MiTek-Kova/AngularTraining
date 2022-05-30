@@ -15,3 +15,11 @@
 
 </div>
 
+
+<hr/>
+<app-admin-usermanager></app-admin-usermanager>
+<hr/>
+<app-admin-userlist
+*ngFor="let user of users"
+[user] = "user"
+></app-admin-userlist>

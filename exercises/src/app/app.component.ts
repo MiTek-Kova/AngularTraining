@@ -10,6 +10,8 @@ export class AppComponent {
   signedIn: boolean = false;
   name: string = "Brad";
 
+  users:{username:string}[] = [{username:'Tiki'},{username:'Wiki'},{username:'Liki'}];
+
   signedInEvent(value: boolean): void {
     this.signedIn = value;
   }
