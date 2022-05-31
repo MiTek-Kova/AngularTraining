@@ -10,9 +10,19 @@ export class AppComponent {
   signedIn: boolean = false;
   name: string = "Brad";
 
-  users:{username:string}[] = [{username:'Tiki'},{username:'Wiki'},{username:'Liki'}];
+  users:{username:string}[] = [];
 
   signedInEvent(value: boolean): void {
     this.signedIn = value;
+  }
+
+  onAddUser(userData:{username:string})
+  {
+    this.users.push(userData);
+  }
+
+  onRemoveFirstUser()
+  {
+    this.users.splice(0,1);
   }
 }

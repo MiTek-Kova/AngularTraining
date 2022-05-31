@@ -17,9 +17,13 @@
 
 
 <hr/>
-<app-admin-usermanager></app-admin-usermanager>
+<app-admin-usermanager
+(addingUser) = "onAddUser($event)"
+(removingFirstUser) = "onRemoveFirstUser()"
+></app-admin-usermanager>
 <hr/>
-<app-admin-userlist
+<app-admin-userlist 
 *ngFor="let user of users"
-[user] = "user"
-></app-admin-userlist>
+>
+  {{user.username}}
+</app-admin-userlist>
