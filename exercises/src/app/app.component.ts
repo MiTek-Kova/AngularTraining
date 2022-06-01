@@ -10,13 +10,13 @@ export class AppComponent {
   signedIn: boolean = false;
   name: string = "Brad";
 
-  users:{username:string}[] = [];
+  users:{username:string,status:string}[] = [];
 
   signedInEvent(value: boolean): void {
     this.signedIn = value;
   }
 
-  onAddUser(userData:{username:string})
+  onAddUser(userData:{username:string,status:string})
   {
     this.users.push(userData);
   }

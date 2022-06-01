@@ -8,7 +8,7 @@ import { Component, Output, OnInit, ViewChild, ElementRef, EventEmitter } from '
 export class AdminUsermanagerComponent implements OnInit {
 
   @ViewChild('username',{static:true}) username:ElementRef;
-  @Output() addingUser:EventEmitter<{username:string}> = new EventEmitter<{username:string}>();
+  @Output() addingUser:EventEmitter<{username:string,status:string}> = new EventEmitter<{username:string,status:string}>();
   @Output() removingFirstUser:EventEmitter<null> = new EventEmitter();
 
   constructor() { }
@@ -18,7 +18,7 @@ export class AdminUsermanagerComponent implements OnInit {
 
   addUser()
   {
-    this.addingUser.emit({username:this.username.nativeElement.value});
+    this.addingUser.emit({username:this.username.nativeElement.value,status:'active'});
     this.username.nativeElement.value='';
   }
 
