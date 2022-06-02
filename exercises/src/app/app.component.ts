@@ -25,4 +25,13 @@ export class AppComponent {
   {
     this.users.splice(0,1);
   }
+
+  toggleUser(index:number)
+  {
+    if(this.users[index].status === "active")
+      this.users[index].status = "inactive";
+
+    else if(this.users[index].status === "inactive")
+      this.users[index].status = "active";
+  }
 }

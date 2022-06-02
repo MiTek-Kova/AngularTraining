@@ -6,6 +6,7 @@ import { ButtonComponent } from './components/button/button.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AdminUserlistComponent } from './components/admin-userlist/admin-userlist.component';
 import { AdminUsermanagerComponent } from './components/admin-usermanager/admin-usermanager.component';
+import { SelectedUserDirective } from './directives/selected-user.directive';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { AdminUsermanagerComponent } from './components/admin-usermanager/admin-
     NavbarComponent,
     AdminUserlistComponent,
     AdminUsermanagerComponent,
+    SelectedUserDirective,
   ],
   imports: [
     BrowserModule
