@@ -13,7 +13,7 @@ appSelectedUser
 >
   <hr/>
   <div>
-    <b [routerLink]="['/user-details', user.id]">
+    <b [routerLink]="['/user-details', user.id]" [queryParams]="{ name: user.username, status: user.status }">
       Username: {{user.username}}
     </b>
     &nbsp;&nbsp;&nbsp;
