@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-user-details',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserDetailsComponent implements OnInit {
 
-  constructor() { }
+  userId: number;
+
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    const routeParams = this.route.snapshot.paramMap;
+    this.userId = Number(routeParams.get('userId'));
   }
 
 }

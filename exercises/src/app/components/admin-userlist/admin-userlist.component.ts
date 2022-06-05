@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class AdminUserlistComponent implements OnInit {
 
-  @Input() users:{username:string,status:string}[] = [];
+  users:{id:number,username:string,status:string}[] = [];
 
   constructor() {}
 
@@ -16,7 +16,16 @@ export class AdminUserlistComponent implements OnInit {
 
   onAddUser(userData:{username:string,status:string})
   {
-    this.users.push(userData);
+    let userId:number;
+    if (this.users.length < 1){
+      userId = 1;
+    } else {
+      const lastIndex = this.users.length-1;
+      const lastUser = this.users[lastIndex];
+      userId = lastUser.id + 1;
+    }
+
+    this.users.push({id: userId, username: userData.username, status: userData.status});
   }
 
   onRemoveFirstUser()

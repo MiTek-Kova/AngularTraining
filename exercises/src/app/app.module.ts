@@ -8,6 +8,7 @@ import { AdminUserlistComponent } from './components/admin-userlist/admin-userli
 import { AdminUsermanagerComponent } from './components/admin-usermanager/admin-usermanager.component';
 import { SelectedUserDirective } from './directives/selected-user.directive';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { UserDetailsComponent } from './components/user-details/user-details.com
     UserDetailsComponent,
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

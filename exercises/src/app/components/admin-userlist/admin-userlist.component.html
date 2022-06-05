@@ -13,7 +13,7 @@ appSelectedUser
 >
   <hr/>
   <div>
-    <b>
+    <b [routerLink]="['/user-details', user.id]">
       Username: {{user.username}}
     </b>
     &nbsp;&nbsp;&nbsp;
