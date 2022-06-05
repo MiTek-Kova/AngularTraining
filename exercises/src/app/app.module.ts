@@ -7,6 +7,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { AdminUserlistComponent } from './components/admin-userlist/admin-userlist.component';
 import { AdminUsermanagerComponent } from './components/admin-usermanager/admin-usermanager.component';
 import { SelectedUserDirective } from './directives/selected-user.directive';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { SelectedUserDirective } from './directives/selected-user.directive';
     AdminUserlistComponent,
     AdminUsermanagerComponent,
     SelectedUserDirective,
+    UserDetailsComponent,
   ],
   imports: [
     BrowserModule

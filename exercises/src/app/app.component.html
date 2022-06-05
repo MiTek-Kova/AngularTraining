@@ -16,22 +16,5 @@
 </div>
 
 
-<hr/>
-<app-admin-usermanager
-(addingUser) = "onAddUser($event)"
-(removingFirstUser) = "onRemoveFirstUser()"
-></app-admin-usermanager>
-<hr/>
-<h4>Click on a user below to activate / deactivate them</h4>
-<app-admin-userlist 
-*ngFor="let user of users"
-appSelectedUser
-[highlightColor]="'dodgerblue'"
-(click)="toggleUser(users.indexOf(user))"
->
-  {{user.username}}
-  &nbsp;&nbsp;&nbsp;
-  <i [ngStyle]="{background: user.status == 'active' ? 'transparent' : 'red'}">
-  {{user.status}}
-  </i>
-</app-admin-userlist>
+<app-admin-userlist [users]="users"></app-admin-userlist>
+
