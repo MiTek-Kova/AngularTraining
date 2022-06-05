@@ -9,6 +9,7 @@ import { AdminUsermanagerComponent } from './components/admin-usermanager/admin-
 import { SelectedUserDirective } from './directives/selected-user.directive';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ErrorComponent } from './components/error/error.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { AppRoutingModule } from './app-routing.module';
     AdminUsermanagerComponent,
     SelectedUserDirective,
     UserDetailsComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,
