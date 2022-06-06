@@ -10,8 +10,6 @@ export class AppComponent {
   signedIn: boolean = false;
   name: string = "Brad";
 
-  users:{username:string,status:string}[] = [];
-
   signedInEvent(value: boolean): void {
     this.signedIn = value;
   }

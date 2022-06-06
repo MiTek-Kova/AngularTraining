@@ -10,6 +10,7 @@ import { SelectedUserDirective } from './directives/selected-user.directive';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ErrorComponent } from './components/error/error.component';
+import {UserService} from "./services/user.service";
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { ErrorComponent } from './components/error/error.component';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

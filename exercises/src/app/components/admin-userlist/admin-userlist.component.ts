@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import {User} from "../../models/user";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-admin-userlist',
@@ -7,39 +9,26 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class AdminUserlistComponent implements OnInit {
 
-  users:{id:number,username:string,status:string}[] = [];
+  users:User[] = [];
 
-  constructor() {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
+    this.users = this.userService.users;
   }
 
   onAddUser(userData:{username:string,status:string})
   {
-    let userId:number;
-    if (this.users.length < 1){
-      userId = 1;
-    } else {
-      const lastIndex = this.users.length-1;
-      const lastUser = this.users[lastIndex];
-      userId = lastUser.id + 1;
-    }
-
-    this.users.push({id: userId, username: userData.username, status: userData.status});
+    this.userService.addUser(userData.username, userData.status);
   }
 
   onRemoveFirstUser()
   {
-    this.users.splice(0,1);
+    this.userService.removeFirstUser();
   }
 
-  toggleUser(index:number)
+  toggleUser(id:number)
   {
-    if(this.users[index].status === "active")
-      this.users[index].status = "inactive";
-
-    else if(this.users[index].status === "inactive")
-      this.users[index].status = "active";
+    this.userService.toggleUser(id);
   }
-
 }
