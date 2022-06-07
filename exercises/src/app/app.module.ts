@@ -10,8 +10,8 @@ import { SelectedUserDirective } from './directives/selected-user.directive';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ErrorComponent } from './components/error/error.component';
-import {UserService} from "./services/user.service";
-import { HomeComponent } from './components/home/home.component';
+import { UserService } from "./services/user.service";
+import { HomeComponent } from "./components/home/home.component";
 
 @NgModule({
   declarations: [
@@ -23,7 +23,7 @@ import { HomeComponent } from './components/home/home.component';
     SelectedUserDirective,
     UserDetailsComponent,
     ErrorComponent,
-    HomeComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

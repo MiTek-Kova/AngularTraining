@@ -27,8 +27,10 @@ export class NavbarComponent implements OnInit {
   signIn(): void {
     if (this.signedIn) {
       this.authService.logOut();
+      this.router.navigate(['/'])
     } else {
       this.authService.login();
+      this.router.navigate(['home'])
     }
     this.signedIn = this.authService.isLoggedIn;
     this.signedInEvent.emit(this.signedIn);
