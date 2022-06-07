@@ -11,6 +11,7 @@ import { UserDetailsComponent } from './components/user-details/user-details.com
 import { AppRoutingModule } from './app-routing.module';
 import { ErrorComponent } from './components/error/error.component';
 import {UserService} from "./services/user.service";
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import {UserService} from "./services/user.service";
     SelectedUserDirective,
     UserDetailsComponent,
     ErrorComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

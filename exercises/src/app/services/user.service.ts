@@ -12,6 +12,10 @@ export class UserService {
     return this._users;
   }
 
+  getUser(id: number) {
+    return this._users.find(u => u.id === id);
+  }
+
   addUser(username:string, status:string) {
     let userId:number;
     if (this._users.length < 1){
@@ -25,9 +29,8 @@ export class UserService {
     this._users.push({id: userId, username: username, status: status});
   }
 
-  removeFirstUser()
-  {
-    this._users.splice(0,1);
+  removeUser(id:number) {
+    this._users = this._users.filter(u => u.id !== id);
   }
 
   toggleUser(id:number)
@@ -40,5 +43,10 @@ export class UserService {
 
     else if(this._users.find(u => u.id === id)!.status === "inactive")
       this._users.find(u => u.id === id)!.status = "active";
+  }
+
+  removeFirstUser()
+  {
+    this._users.splice(0,1);
   }
 }

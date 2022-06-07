@@ -1,0 +1,35 @@
+.signedInStatus {
+  display: flex;
+  gap: 10px;
+}
+
+.notSignedIn, .signedIn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 50px;
+  border-radius: 100%;
+  background-color: red;
+}
+
+.signedIn {
+  background-color: green;
+}
+
+h1 {
+  margin: 8px 0;
+}
+
+p {
+  margin: 0;
+}
+
+.content {
+  display: flex;
+  margin: 82px auto 32px;
+  padding: 0 16px;
+  max-width: 960px;
+  flex-direction: column;
+  align-items: center;
+}

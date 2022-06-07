@@ -13,13 +13,15 @@ appSelectedUser
 >
   <hr/>
   <div>
-    <b [routerLink]="['/user-details', user.id]" [queryParams]="{ name: user.username, status: user.status }">
+    <b [routerLink]="['/user-details', user.id]">
       Username: {{user.username}}
     </b>
     &nbsp;&nbsp;&nbsp;
     <i [ngStyle]="{background: user.status == 'active' ? 'transparent' : 'red'}" (click)="toggleUser(user.id)">
       {{user.status}}
     </i>
+    &nbsp;&nbsp;&nbsp;
+    <app-button [text]="'Back'" (click)="onRemoveUser(user.id)"></app-button>
   </div>
   <hr/>
 </div>

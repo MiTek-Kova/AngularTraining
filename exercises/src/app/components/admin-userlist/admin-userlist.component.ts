@@ -22,13 +22,18 @@ export class AdminUserlistComponent implements OnInit {
     this.userService.addUser(userData.username, userData.status);
   }
 
-  onRemoveFirstUser()
+  onRemoveUser(id:number)
   {
-    this.userService.removeFirstUser();
+    this.userService.removeUser(id);
   }
 
   toggleUser(id:number)
   {
     this.userService.toggleUser(id);
+  }
+
+  onRemoveFirstUser()
+  {
+    this.userService.removeFirstUser();
   }
 }

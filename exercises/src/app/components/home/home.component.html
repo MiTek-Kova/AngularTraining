@@ -1,0 +1,7 @@
+<div class="content" role="main">
+  <h1>Hello {{name}}</h1>
+  <div class="signedInStatus">
+    <h2>Signed in:</h2>
+    <span class="material-icons signedIn" [ngClass]="{ 'signedIn': signedIn, 'notSignedIn': !signedIn }">{{'done'}}</span>
+  </div>
+</div>

@@ -8,7 +8,6 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'exercises';
   signedIn: boolean = false;
-  name: string = "Brad";
 
   signedInEvent(value: boolean): void {
     this.signedIn = value;
