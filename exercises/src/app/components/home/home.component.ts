@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'app-home',
@@ -9,8 +10,9 @@ import {Router} from "@angular/router";
 export class HomeComponent implements OnInit {
 
   name: string = "Brad";
+  signedIn: boolean = this.authService.isLoggedIn();
 
-  constructor(private router: Router) { }
+  constructor(private authService: AuthenticationService, private router: Router) { }
 
   ngOnInit(): void {
 

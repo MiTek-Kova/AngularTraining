@@ -9,7 +9,7 @@ export class AuthenticationService {
 
   constructor() { }
 
-  get isLoggedIn(): boolean {
+  isLoggedIn(): boolean {
     return this._isLoggedIn;
   }
 

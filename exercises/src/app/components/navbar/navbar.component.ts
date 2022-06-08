@@ -12,27 +12,26 @@ export class NavbarComponent implements OnInit {
   @Output("signedInEvent")
   signedInEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  signedIn: boolean = false;
+  signedIn: boolean = this.authService.isLoggedIn();
 
   constructor(private authService: AuthenticationService, private router: Router) { }
 
   ngOnInit(): void {
-    this.signedIn = this.authService.isLoggedIn;
   }
 
   goHome(): void {
-    this.router.navigate(['/home'])
+    this.router.navigate(['/home']);
   }
 
   signIn(): void {
     if (this.signedIn) {
       this.authService.logOut();
-      this.router.navigate(['/'])
+      window.location.reload();
     } else {
       this.authService.login();
-      this.router.navigate(['home'])
+      this.router.navigate(['home']);
     }
-    this.signedIn = this.authService.isLoggedIn;
+    this.signedIn = this.authService.isLoggedIn();
     this.signedInEvent.emit(this.signedIn);
   }
 }

@@ -9,12 +9,11 @@ import {UserService} from "../../services/user.service";
 })
 export class AdminUserlistComponent implements OnInit {
 
-  users:User[] = [];
+  users:User[] = this.userService.getUsers();
 
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.users = this.userService.users;
   }
 
   onAddUser(userData:{username:string,status:string})

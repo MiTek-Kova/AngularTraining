@@ -8,7 +8,11 @@ export class UserService {
 
   constructor() { }
 
-  get users() : User[] {
+  hasAnyUsers(): boolean {
+    return this._users.length > 0;
+  }
+
+  getUsers() : User[] {
     return this._users;
   }
 
@@ -30,7 +34,9 @@ export class UserService {
   }
 
   removeUser(id:number) {
-    this._users = this._users.filter(u => u.id !== id);
+    const user = this._users.find(u => u.id === id);
+    if (user)
+      this._users.splice(this._users.indexOf(user), 1);
   }
 
   toggleUser(id:number)

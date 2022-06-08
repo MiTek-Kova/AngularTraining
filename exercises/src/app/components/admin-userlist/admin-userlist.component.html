@@ -21,7 +21,9 @@ appSelectedUser
       {{user.status}}
     </i>
     &nbsp;&nbsp;&nbsp;
-    <app-button [text]="'Back'" (click)="onRemoveUser(user.id)"></app-button>
+    <button (click)="onRemoveUser(user.id)">
+      Delete
+    </button>
   </div>
   <hr/>
 </div>

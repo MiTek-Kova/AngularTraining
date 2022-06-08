@@ -12,7 +12,7 @@ export class UserListGuard implements CanDeactivate<unknown> {
   }
 
   canDeactivate() {
-    return this.userService.users.length > 0;
+    return this.userService.hasAnyUsers();
   }
 
 }
