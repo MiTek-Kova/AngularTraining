@@ -12,7 +12,10 @@ export class UserListGuard implements CanDeactivate<unknown> {
   }
 
   canDeactivate() {
-    return this.userService.hasAnyUsers();
+    if (this.userService.hasAnyUsers())
+      return true;
+
+    return window.confirm('Are you sure you want to leave with no users?')
   }
 
 }
