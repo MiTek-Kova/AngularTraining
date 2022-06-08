@@ -1,6 +1,8 @@
-<button (click)="goBackToUserList()">
-  Back
-</button>
-<p>user-details works for user ID of {{this.userId}}!</p>
-<p> Name: {{this.username}} </p>
-<p> Status: {{this.status}} </p>
+<div *ngIf="user">
+  <button (click)="goBackToUserList()">
+    Back
+  </button>
+  <p>user-details works for user ID of {{this.user.id}}!</p>
+  <p> Name: {{this.user.username}} </p>
+  <p> Status: {{this.user.status}} </p>
+</div>

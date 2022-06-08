@@ -17,9 +17,13 @@ appSelectedUser
       Username: {{user.username}}
     </b>
     &nbsp;&nbsp;&nbsp;
-    <i [ngStyle]="{background: user.status == 'active' ? 'transparent' : 'red'}" (click)="toggleUser(users.indexOf(user))">
+    <i [ngStyle]="{background: user.status == 'active' ? 'transparent' : 'red'}" (click)="toggleUser(user.id)">
       {{user.status}}
     </i>
+    &nbsp;&nbsp;&nbsp;
+    <button (click)="onRemoveUser(user.id)">
+      Delete
+    </button>
   </div>
   <hr/>
 </div>

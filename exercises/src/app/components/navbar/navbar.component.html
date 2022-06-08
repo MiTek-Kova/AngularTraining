@@ -4,7 +4,7 @@
       alt="MiTek Logo"
       src="assets/kovalogo_big.png"
     />
-      <app-button text="Home"></app-button>
+      <app-button text="Home" (click)="goHome()"></app-button>
       <div class="spacer"></div>
       <app-button text="Register"></app-button>
       <app-button [text]="!signedIn ? 'Sign in' : 'Sign out'" (click)="signIn()"></app-button>

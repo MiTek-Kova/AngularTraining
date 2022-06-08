@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import {User} from "../../models/user";
 
 @Component({
   selector: 'app-admin-userlist',
@@ -7,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class AdminUserlistComponent implements OnInit {
 
-  users:{id:number,username:string,status:string}[] = [];
+  users:User[] = [];
 
   constructor() {}
 
@@ -26,6 +27,13 @@ export class AdminUserlistComponent implements OnInit {
     }
 
     this.users.push({id: userId, username: userData.username, status: userData.status});
+  }
+
+  onRemoveUser(id:number)
+  {
+    const user = this.users.find(u => u.id === id);
+    if (user)
+      this.users.splice(this.users.indexOf(user), 1);
   }
 
   onRemoveFirstUser()

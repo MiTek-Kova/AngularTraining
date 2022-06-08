@@ -10,6 +10,7 @@ import { SelectedUserDirective } from './directives/selected-user.directive';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ErrorComponent } from './components/error/error.component';
+import { HomeComponent } from "./components/home/home.component";
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ErrorComponent } from './components/error/error.component';
     SelectedUserDirective,
     UserDetailsComponent,
     ErrorComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
