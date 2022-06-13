@@ -6,6 +6,11 @@
     />
       <app-button text="Home" (click)="goHome()"></app-button>
       <div class="spacer"></div>
+      Language:
+      <app-button text="English"></app-button>
+      <app-button text="Suomi"></app-button>
+      <div class="spacer"></div>
       <app-button text="Register"></app-button>
       <app-button [text]="!signedIn ? 'Sign in' : 'Sign out'" (click)="signIn()"></app-button>
+      
   </div>
