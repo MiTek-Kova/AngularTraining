@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {AuthenticationService} from "../../services/authentication.service";
 import {Router} from "@angular/router";
 
@@ -12,11 +12,22 @@ export class NavbarComponent implements OnInit {
   @Output("signedInEvent")
   signedInEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  @Output() languageChanged: EventEmitter<string> = new EventEmitter<string>();
+  
+  language:string = "en";
+
   signedIn: boolean = this.authService.isLoggedIn();
+  register = "Register"
 
   constructor(private authService: AuthenticationService, private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  changeLanguage(lang:string)
+  {
+    this.language = lang;
+    this.languageChanged.emit(lang);
   }
 
   goHome(): void {

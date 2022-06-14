@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../services/authentication.service";
 
@@ -9,7 +9,10 @@ import {AuthenticationService} from "../../services/authentication.service";
 })
 export class HomeComponent implements OnInit {
 
-  name: string = "Brad";
+  @Input() language:string = "en";
+
+  welcome = "Welcome to Kova";
+  
   signedIn: boolean = this.authService.isLoggedIn();
 
   constructor(private authService: AuthenticationService, private router: Router) { }

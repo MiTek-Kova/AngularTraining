@@ -1,8 +1,8 @@
-<app-navbar (signedInEvent)="signedInEvent($event)"></app-navbar>
+<app-navbar (languageChanged)="doLanguageChange($event)" (signedInEvent)="signedInEvent($event)"></app-navbar>
 <div class="content" role="main">
 
   <h1 *ngIf="!signedIn">Please sign in</h1>
-  <h1 *ngIf="signedIn">Hello {{name}}</h1>
+  <h1 *ngIf="signedIn">{{greeting | language:language:'greeting'}} {{name}}</h1>
   <div class="signedInStatus">
     <h2>Signed in:</h2>
     <span class="material-icons" [ngClass]="{ 'signedIn': signedIn, 'notSignedIn': !signedIn }">{{ signedIn ? 'done' : 'close'}}</span>

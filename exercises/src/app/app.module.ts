@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ErrorComponent } from './components/error/error.component';
 import { UserService } from "./services/user.service";
 import { HomeComponent } from "./components/home/home.component";
+import { LanguagePipe } from './pipes/language.pipe';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { HomeComponent } from "./components/home/home.component";
     SelectedUserDirective,
     UserDetailsComponent,
     ErrorComponent,
-    HomeComponent
+    HomeComponent,
+    LanguagePipe
   ],
   imports: [
     BrowserModule,
