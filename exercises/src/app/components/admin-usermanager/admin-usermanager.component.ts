@@ -1,4 +1,5 @@
 import { Component, Output, OnInit, ViewChild, ElementRef, EventEmitter } from '@angular/core';
+import {Months} from "../../models/user";
 
 @Component({
   selector: 'app-admin-usermanager',
@@ -8,7 +9,7 @@ import { Component, Output, OnInit, ViewChild, ElementRef, EventEmitter } from '
 export class AdminUsermanagerComponent implements OnInit {
 
   @ViewChild('username',{static:true}) username:ElementRef;
-  @Output() addingUser:EventEmitter<{username:string,status:string}> = new EventEmitter<{username:string,status:string}>();
+  @Output() addingUser:EventEmitter<{username:string,status:string,lastName:string,address:string,birthMonth:Months|null}> = new EventEmitter<{username:string,status:string,lastName:string,address:string,birthMonth:Months|null}>();
   @Output() removingFirstUser:EventEmitter<null> = new EventEmitter();
 
   constructor() { }
@@ -18,7 +19,7 @@ export class AdminUsermanagerComponent implements OnInit {
 
   addUser()
   {
-    this.addingUser.emit({username:this.username.nativeElement.value,status:'active'});
+    this.addingUser.emit({username:this.username.nativeElement.value, status:'active', lastName: "", address: "", birthMonth: null});
     this.username.nativeElement.value='';
   }
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User } from "../models/user";
+import {Months, User} from "../models/user";
 
 @Injectable()
 export class UserService {
@@ -20,7 +20,7 @@ export class UserService {
     return this._users.find(u => u.id === id);
   }
 
-  addUser(username:string, status:string) {
+  addUser(username:string, status:string,lastName:string,address:string,birthMonth:Months|null) {
     let userId:number;
     if (this._users.length < 1){
       userId = 1;
@@ -30,7 +30,7 @@ export class UserService {
       userId = lastUser.id + 1;
     }
 
-    this._users.push({id: userId, username: username, status: status});
+    this._users.push({id: userId, username: username, status: status, lastname: lastName, address: address, birthMonth: birthMonth});
   }
 
   removeUser(id:number) {
@@ -54,5 +54,19 @@ export class UserService {
   removeFirstUser()
   {
     this._users.splice(0,1);
+  }
+  
+  updateUser(user:User): boolean {
+    let userToUpdate = this._users.find(u => u.id === user.id);
+    if (!userToUpdate)
+      return false;
+    
+    userToUpdate.username = user.username;
+    userToUpdate.lastname = user.lastname;
+    userToUpdate.address = user.address;
+    userToUpdate.status = user.status;
+    userToUpdate.birthMonth = user.birthMonth;
+    
+    return true;
   }
 }

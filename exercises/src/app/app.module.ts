@@ -13,6 +13,7 @@ import { ErrorComponent } from './components/error/error.component';
 import { UserService } from "./services/user.service";
 import { HomeComponent } from "./components/home/home.component";
 import { LanguagePipe } from './pipes/language.pipe';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { LanguagePipe } from './pipes/language.pipe';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

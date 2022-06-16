@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from "../../models/user";
+import {Months, User} from "../../models/user";
 import {UserService} from "../../services/user.service";
 
 @Component({
@@ -16,9 +16,9 @@ export class AdminUserlistComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onAddUser(userData:{username:string,status:string})
+  onAddUser(userData:{username:string,status:string,lastName:string,address:string,birthMonth:Months|null})
   {
-    this.userService.addUser(userData.username, userData.status);
+    this.userService.addUser(userData.username, userData.status, userData.lastName, userData.address, userData.birthMonth);
   }
 
   onRemoveUser(id:number)

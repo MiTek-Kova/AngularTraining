@@ -1,8 +1,62 @@
+<div *ngIf="!user">
+  <p>There is no user!</p>
+</div>
 <div *ngIf="user">
-  <button (click)="goBackToUserList()">
-    Back
-  </button>
-  <p>user-details works for user ID of {{this.user.id}}!</p>
-  <p> Name: {{this.user.username}} </p>
-  <p> Status: {{this.user.status}} </p>
+  <button (click)="goBackToUserList()"> Back </button>
+  
+  <p *ngIf="isSubmitted" class="submit-text"> The form has been submitted. </p>
+  
+  <form #userDetailsForm="ngForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label> User ID: {{this.user.id}} </label>
+    </div>
+    
+    <div class="form-group">
+      <label for="username"> Name: </label>
+      <input [(ngModel)]="this.user.username" id="username" name="username" #username="ngModel" required minlength="2"/>
+    </div>
+      
+    <div class="form-group">
+      <label for="lastname"> Last Name: </label>
+      <input [(ngModel)]="this.user.lastname" id="lastname" name="lastname" #lastname="ngModel" required/>
+    </div>
+      
+    <div class="form-group">
+      <label> Status: {{this.user.status}} </label>
+      <button type="button" (click)="toggleStatus()"> {{ this.user.status == "active" ? "Deactivate" : "Activate" }}</button>
+    </div>
+
+    <div class="form-group">
+      <label for="address"> Address: </label>
+      <textarea [(ngModel)]="this.user.address" id="address" name="address" #address="ngModel"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="birthMonth"> Birth Month: </label>
+      <select [(ngModel)]="this.user.birthMonth" id="birthMonth" name="birthMonth" #birthMonth="ngModel">
+        <option *ngFor="let month of possibleMonths()">
+          {{ month }}
+        </option>
+      </select>
+    </div>
+    
+    <div *ngIf="username.invalid && (username.dirty || username.touched)">
+      <div *ngIf="username.errors?.['required']" class="error-message">
+        User name is required
+      </div>
+      <div *ngIf="username.errors?.['minlength']" class="error-message">
+        User name must be longer than 2 characters
+      </div>
+    </div>
+    
+    <div *ngIf="lastname.invalid">
+      <div *ngIf="lastname.errors?.['required']" class="error-message">
+        Last name is required
+      </div>
+    </div>
+    
+    <button type="submit" [disabled]="userDetailsForm.invalid && !isSubmitted"> Submit </button>
+    
+  </form>
 </div>
