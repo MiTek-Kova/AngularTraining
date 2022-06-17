@@ -1,5 +1,5 @@
 import { Component, Output, OnInit, ViewChild, ElementRef, EventEmitter } from '@angular/core';
-import {Months} from "../../models/user";
+import {Address, Months} from "../../models/user";
 
 @Component({
   selector: 'app-admin-usermanager',
@@ -9,7 +9,7 @@ import {Months} from "../../models/user";
 export class AdminUsermanagerComponent implements OnInit {
 
   @ViewChild('username',{static:true}) username:ElementRef;
-  @Output() addingUser:EventEmitter<{username:string,status:string,lastName:string,address:string,birthMonth:Months|null}> = new EventEmitter<{username:string,status:string,lastName:string,address:string,birthMonth:Months|null}>();
+  @Output() addingUser:EventEmitter<{username:string,status:string,lastName:string,address:Address,birthMonth:Months|null}> = new EventEmitter<{username:string,status:string,lastName:string,address:Address,birthMonth:Months|null}>();
   @Output() removingFirstUser:EventEmitter<null> = new EventEmitter();
 
   constructor() { }
@@ -19,7 +19,7 @@ export class AdminUsermanagerComponent implements OnInit {
 
   addUser()
   {
-    this.addingUser.emit({username:this.username.nativeElement.value, status:'active', lastName: "", address: "", birthMonth: null});
+    this.addingUser.emit({username:this.username.nativeElement.value, status:'active', lastName: "", address: {firstLine: "", secondLine: "", postOrZipCode: ""}, birthMonth: null});
     this.username.nativeElement.value='';
   }
 

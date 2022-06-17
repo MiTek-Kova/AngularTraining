@@ -9,3 +9,11 @@
 .submit-text {
     color: green;
 }
+
+.addressLine {
+    margin-left: 30px;
+}
+
+input.ng-invalid {
+    background-color: red;
+}

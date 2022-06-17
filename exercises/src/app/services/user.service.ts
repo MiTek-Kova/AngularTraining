@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Months, User} from "../models/user";
+import {Address, Months, User} from "../models/user";
 
 @Injectable()
 export class UserService {
@@ -20,7 +20,7 @@ export class UserService {
     return this._users.find(u => u.id === id);
   }
 
-  addUser(username:string, status:string,lastName:string,address:string,birthMonth:Months|null) {
+  addUser(username:string, status:string,lastName:string,address:Address,birthMonth:Months|null) {
     let userId:number;
     if (this._users.length < 1){
       userId = 1;

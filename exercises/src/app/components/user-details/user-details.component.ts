@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
 import {Months, User} from "../../models/user";
-import { UserService } from "../../services/user.service";
+import {UserService} from "../../services/user.service";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {noAdminValidator} from "../../validators/no-admin.validator";
 
 @Component({
   selector: 'app-user-details',
@@ -9,22 +11,38 @@ import { UserService } from "../../services/user.service";
   styleUrls: ['./user-details.component.css']
 })
 export class UserDetailsComponent implements OnInit {
-
-  user?: User;
+  
+  userId: number;
+  userDetailsFormGroup: FormGroup;
   
   isSubmitted: boolean;
 
   constructor(private activatedRouter: ActivatedRoute,
               private router: Router,
-              private userService: UserService) { }
+              private userService: UserService,
+              private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     const routeParams = this.activatedRouter.snapshot.paramMap;
-    const userId = Number(routeParams.get('userId'));
+    this.userId = Number(routeParams.get('userId'));
     this.isSubmitted = false;
     
     // We only have one layer deep, so a shallow copy here is ok
-    this.user = Object.assign({}, this.userService.getUser(userId));
+    const user = Object.assign({}, this.userService.getUser(this.userId));
+    if (!user)
+      return;
+    
+    this.userDetailsFormGroup = this.formBuilder.group({
+      username: [user.username, [Validators.required, Validators.minLength(2), noAdminValidator()]],
+      lastname: [user.lastname, Validators.required],
+      status: [user.status],
+      address: this.formBuilder.group({
+        firstLine: [user.address.firstLine],
+        secondLine: [user.address.secondLine],
+        postOrZipCode: [user.address.postOrZipCode]
+      }),
+      birthMonth: [user.birthMonth]
+    });
   }
 
   goBackToUserList(): void {
@@ -32,10 +50,12 @@ export class UserDetailsComponent implements OnInit {
   }
   
   toggleStatus(): void {
-    if (!this.user?.status)
+    const control = this.userDetailsFormGroup?.controls['status'];
+    if (!control)
       return;
     
-    this.user.status = this.user.status == "active" ? "inactive" : "active";
+    const newValue = control.value === "active" ? "inactive" : "active";
+    control.setValue(newValue);
   }
 
   public possibleMonths(): Array<string> {
@@ -44,13 +64,27 @@ export class UserDetailsComponent implements OnInit {
   }
   
   onSubmit(): void {
-    if (!this.user)
+    if (!this.userDetailsFormGroup)
       return;
     
-    if (!this.userService.updateUser(this.user))
+    const userDetailsToSave: User = {
+      id: this.userId,
+      username: this.userDetailsFormGroup.controls['username'].value,
+      lastname: this.userDetailsFormGroup.controls['lastname'].value,
+      status: this.userDetailsFormGroup.controls['status'].value,
+      address: {
+        firstLine: this.userDetailsFormGroup.controls['address.firstLine'].value,
+        secondLine: this.userDetailsFormGroup.controls['address.secondLine'].value,
+        postOrZipCode: this.userDetailsFormGroup.controls['address.postOrZipCode'].value
+      },
+      birthMonth: this.userDetailsFormGroup.controls['birthMonth'].value
+    };
+    
+    if (!this.userService.updateUser(userDetailsToSave))
       return;
     
     this.isSubmitted = true;
     setTimeout(() => {this.isSubmitted = false}, 1500); // Get rid of submitted after a few seconds
   }
 }
+

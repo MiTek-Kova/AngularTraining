@@ -18,6 +18,12 @@ export interface User {
   username: string;
   status: string;
   lastname: string;
-  address: string;
+  address: Address;
   birthMonth: Months | null;
+}
+
+export interface Address {
+  firstLine: string;
+  secondLine: string;
+  postOrZipCode: string;
 }

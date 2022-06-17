@@ -13,7 +13,7 @@ import { ErrorComponent } from './components/error/error.component';
 import { UserService } from "./services/user.service";
 import { HomeComponent } from "./components/home/home.component";
 import { LanguagePipe } from './pipes/language.pipe';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -31,7 +31,7 @@ import {FormsModule} from "@angular/forms";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    ReactiveFormsModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
