@@ -1,33 +1,35 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {AuthenticationService} from "../../services/authentication.service";
-import {Router} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { LanguageService } from 'src/app/services/language.service';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-
-  @Output("signedInEvent")
-  signedInEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  @Output() languageChanged: EventEmitter<string> = new EventEmitter<string>();
-  
-  language:string = "en";
-
+  language: string = this.languageService.currentLanguage;
   signedIn: boolean = this.authService.isLoggedIn();
-  register = "Register"
+  register = 'Register';
 
-  constructor(private authService: AuthenticationService, private router: Router) { }
-
-  ngOnInit(): void {
+  constructor(
+    private readonly authService: AuthenticationService,
+    private readonly languageService: LanguageService,
+    private readonly router: Router
+  ) {
+    this.authService.isLoggedIn$.subscribe(
+      (isLoggedIn) => (this.signedIn = isLoggedIn)
+    );
+    this.languageService.language$.subscribe(
+      (language) => (this.language = language)
+    );
   }
 
-  changeLanguage(lang:string)
-  {
-    this.language = lang;
-    this.languageChanged.emit(lang);
+  ngOnInit(): void {}
+
+  changeLanguage(lang: string) {
+    this.languageService.changeLanguage(lang);
   }
 
   goHome(): void {
@@ -40,9 +42,7 @@ export class NavbarComponent implements OnInit {
       window.location.reload();
     } else {
       this.authService.login();
-      this.router.navigate(['home']);
+      this.goHome();
     }
-    this.signedIn = this.authService.isLoggedIn();
-    this.signedInEvent.emit(this.signedIn);
   }
 }

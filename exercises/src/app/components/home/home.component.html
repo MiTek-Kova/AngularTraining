@@ -1,6 +1,4 @@
-<div class="content" [hidden]="!signedIn">
-  <h1>{{welcome | language:language:'welcome'}}</h1>
-  <button (click)="goToUsers()">
-  Go To Users
-  </button>
+<div class="content" [hidden]="!(signedIn$ | async)">
+  <h1>{{ welcome | language: language:"welcome" }}</h1>
+  <button (click)="goToUsers()">Go To Users</button>
 </div>

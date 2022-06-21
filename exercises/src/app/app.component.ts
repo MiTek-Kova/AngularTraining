@@ -1,28 +1,32 @@
 import { Component } from '@angular/core';
+import { User } from './models/user';
+import { AuthenticationService } from './services/authentication.service';
+import { LanguageService } from './services/language.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   title = 'exercises';
-  signedIn: boolean = false;
-  name: string = "Brad";
-  greeting = "Hello";
+  signedIn = false;
+  name = 'Brad';
+  greeting = 'Hello';
+  language = this.langService.currentLanguage;
+  register = 'Register';
 
-  language="en";
+  users: Pick<User, 'username' | 'status'>[] = [];
 
-  register="Register";
-
-  users:{username:string,status:string}[] = [];
-
-  signedInEvent(value: boolean): void {
-    this.signedIn = value;
-  }
-
-  doLanguageChange(lang:string)
-  {
-    this.language = lang;
+  constructor(
+    private readonly authService: AuthenticationService,
+    private readonly langService: LanguageService
+  ) {
+    this.authService.isLoggedIn$.subscribe(
+      (isLoggedIn) => (this.signedIn = isLoggedIn)
+    );
+    this.langService.language$.subscribe(
+      (language) => (this.language = language)
+    );
   }
 }
