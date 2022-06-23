@@ -1,0 +1,1 @@
+public record Address(string firstLine, string secondLine, string postOrZipCode);

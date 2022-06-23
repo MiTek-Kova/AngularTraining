@@ -28,9 +28,9 @@ export class UserDetailsComponent implements OnInit {
     this.userId = Number(routeParams.get('userId'));
     this.isSubmitted = false;
 
-    // We only have one layer deep, so a shallow copy here is ok
     const user = Object.assign({}, this.userService.getUser(this.userId));
-    if (!user) return;
+    if (!user) 
+      return;
 
     this.userDetailsFormGroup = this.formBuilder.group({
       username: [
