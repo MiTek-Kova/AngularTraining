@@ -14,6 +14,7 @@ import { UserService } from "./services/user.service";
 import { HomeComponent } from "./components/home/home.component";
 import { LanguagePipe } from './pipes/language.pipe';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

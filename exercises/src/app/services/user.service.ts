@@ -1,11 +1,63 @@
-import { Injectable } from '@angular/core';
-import { Address, Months, User } from '../models/user';
+import {Injectable} from '@angular/core';
+import {User} from '../models/user';
+import {environment} from "../../environments/environment";
+import {Address, MyUserApiClient, UserDto} from "../api/myUserApi.service";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable()
 export class UserService {
   private _users: User[] = [];
+  private apiClient: MyUserApiClient;
 
-  constructor() {}
+  constructor(httpClient: HttpClient) {
+    // If we have an API location, use that rather than just in-memory
+    if (environment.apiLocation) {
+      this.apiClient = new MyUserApiClient(httpClient, environment.apiLocation);
+      this.apiClient.getUsers().subscribe(users => {        
+        for (let user of users) {
+          let adaptedUser = UserService.convertDtoToDomain(user);
+          if (!adaptedUser)
+            continue;
+          this._users.push(adaptedUser);
+        }
+      });
+    }
+  }
+  
+  private static convertDtoToDomain(user: UserDto): User | null {
+    // We need a complete user
+    if (!user.userId || !user.username || !user.status || !user.lastName || !user.address
+       || !user.address.firstLine || !user.address.secondLine || !user.address.postOrZipCode || user.birthMonth === undefined)
+      return null;
+
+    return {
+      id: user.userId,
+      username: user.username,
+      status: user.status,
+      lastname: user.lastName,
+      address: {
+        firstLine: user.address?.firstLine,
+        secondLine: user.address?.secondLine,
+        postOrZipCode: user.address?.postOrZipCode
+      },
+      birthMonth: user.birthMonth
+    };
+  }
+  
+  private static convertDomainToDto(user: User): UserDto {
+    return new UserDto({
+      userId: user.id,
+      username: user.username,
+      status: user.status,
+      lastName: user.lastname,
+      address: new Address({
+        firstLine: user.address?.firstLine,
+        secondLine: user.address?.secondLine,
+        postOrZipCode: user.address?.postOrZipCode
+      }),
+      birthMonth: user.birthMonth ? user.birthMonth : undefined
+    });
+  }
 
   hasAnyUsers(): boolean {
     return this._users.length > 0;
@@ -29,15 +81,24 @@ export class UserService {
       userId = lastUser.id + 1;
     }
 
-    this._users.push({
+    let newUser = {
       id: userId,
       ...userDetails,
-    });
+    };
+    this._users.push(newUser);
+    
+    if (this.apiClient) 
+      this.apiClient.createUser(UserService.convertDomainToDto(newUser)).subscribe(() => {
+        console.log("we did it!");
+      });
   }
 
   removeUser(id: number) {
     const user = this._users.find((u) => u.id === id);
     if (user) this._users.splice(this._users.indexOf(user), 1);
+
+    if (this.apiClient) 
+      this.apiClient.deleteUser(id).subscribe(() => {});
   }
 
   toggleUser(id: number) {
@@ -45,10 +106,17 @@ export class UserService {
     if (!user) return;
 
     user.status = user.status === 'active' ? 'inactive' : 'active';
+
+    if (this.apiClient)
+      this.apiClient.updateUser(UserService.convertDomainToDto(user)).subscribe(() => {});
   }
 
   removeFirstUser() {
+    let id = this._users[0].id;
     this._users.splice(0, 1);
+
+    if (this.apiClient)
+      this.apiClient.deleteUser(id).subscribe(() => {});
   }
 
   updateUser(user: User): boolean {
@@ -60,6 +128,9 @@ export class UserService {
     userToUpdate.address = user.address;
     userToUpdate.status = user.status;
     userToUpdate.birthMonth = user.birthMonth;
+
+    if (this.apiClient)
+      this.apiClient.updateUser(UserService.convertDomainToDto(userToUpdate)).subscribe(() => {});
 
     return true;
   }
