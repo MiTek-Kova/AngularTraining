@@ -88,9 +88,7 @@ export class UserService {
     this._users.push(newUser);
     
     if (this.apiClient) 
-      this.apiClient.createUser(UserService.convertDomainToDto(newUser)).subscribe(() => {
-        console.log("we did it!");
-      });
+      this.apiClient.createUser(UserService.convertDomainToDto(newUser)).subscribe(() => {});
   }
 
   removeUser(id: number) {
