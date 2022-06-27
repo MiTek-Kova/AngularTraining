@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AngularTrainingExampleAPI.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace AngularTrainingExampleAPI.Controllers
 {
    [ApiController]
    [Route("[controller]")]
+   [Authorize("Api")]
    public class UserController : ControllerBase
    {
       public static readonly Dictionary<int, UserDto> Users = new()

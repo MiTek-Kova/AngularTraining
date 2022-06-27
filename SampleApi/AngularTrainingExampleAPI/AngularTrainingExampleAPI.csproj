@@ -1,15 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.6" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0-preview.5.22301.12" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.0.7" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.20.0" />
     </ItemGroup>
 
     <Target Name="SwaggerOutput" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Debug'">
         <Exec Command="dotnet tool restore" />
-        <Exec Command="swagger tofile --output ../ExampleApiSpecification/swagger.json $(OutputPath)\$(AssemblyName).dll v1"/>
+        <Exec Command="swagger tofile --output ../ExampleApiSpecification/swagger.json $(OutputPath)\$(AssemblyName).dll v1" />
     </Target>
 </Project>

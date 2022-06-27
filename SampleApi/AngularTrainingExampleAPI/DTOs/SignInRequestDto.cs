@@ -1,4 +1,4 @@
 ﻿namespace AngularTrainingExampleAPI.DTOs
 {
-   public record SignInRequestDto(string email, string password);
+   public record SignInRequestDto(string username, string password);
 }
