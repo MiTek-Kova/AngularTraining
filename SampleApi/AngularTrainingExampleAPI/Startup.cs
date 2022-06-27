@@ -84,7 +84,7 @@ namespace AngularTrainingExampleAPI
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AngularTrainingExampleAPI v1"));
          }
 
-         app.UseCors(builder => builder.AllowAnyOrigin()); // Allow any origin for the demo app.
+         app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()); // Allow any origin for the demo app.
          
          app.UseHttpsRedirection();
 
