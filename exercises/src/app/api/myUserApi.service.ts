@@ -97,6 +97,76 @@ export class MyUserApiClient {
     }
 
     /**
+     * @param body (optional) 
+     * @return Success
+     */
+    refreshAccessToken(body: RefreshAccessTokenDto | undefined): Observable<SignInResponseDto> {
+        let url_ = this.baseUrl + "/Authentication/RefreshAccessToken";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processRefreshAccessToken(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRefreshAccessToken(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<SignInResponseDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<SignInResponseDto>;
+        }));
+    }
+
+    protected processRefreshAccessToken(response: HttpResponseBase): Observable<SignInResponseDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = SignInResponseDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result400 = ProblemDetails.fromJS(resultData400);
+            return throwException("Bad Request", status, _responseText, _headers, result400);
+            }));
+        } else if (status === 401) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result401: any = null;
+            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result401 = ProblemDetails.fromJS(resultData401);
+            return throwException("Unauthorized", status, _responseText, _headers, result401);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param id (optional) 
      * @return Success
      */
@@ -500,8 +570,44 @@ export interface IProblemDetails {
     instance?: string | undefined;
 }
 
+export class RefreshAccessTokenDto implements IRefreshAccessTokenDto {
+    idToken?: string | undefined;
+
+    constructor(data?: IRefreshAccessTokenDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.idToken = _data["idToken"];
+        }
+    }
+
+    static fromJS(data: any): RefreshAccessTokenDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new RefreshAccessTokenDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["idToken"] = this.idToken;
+        return data;
+    }
+}
+
+export interface IRefreshAccessTokenDto {
+    idToken?: string | undefined;
+}
+
 export class SignInRequestDto implements ISignInRequestDto {
-    email?: string | undefined;
+    username?: string | undefined;
     password?: string | undefined;
 
     constructor(data?: ISignInRequestDto) {
@@ -515,7 +621,7 @@ export class SignInRequestDto implements ISignInRequestDto {
 
     init(_data?: any) {
         if (_data) {
-            this.email = _data["email"];
+            this.username = _data["username"];
             this.password = _data["password"];
         }
     }
@@ -529,20 +635,21 @@ export class SignInRequestDto implements ISignInRequestDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["email"] = this.email;
+        data["username"] = this.username;
         data["password"] = this.password;
         return data;
     }
 }
 
 export interface ISignInRequestDto {
-    email?: string | undefined;
+    username?: string | undefined;
     password?: string | undefined;
 }
 
 export class SignInResponseDto implements ISignInResponseDto {
     userId?: number;
     authToken?: string | undefined;
+    idToken?: string | undefined;
 
     constructor(data?: ISignInResponseDto) {
         if (data) {
@@ -557,6 +664,7 @@ export class SignInResponseDto implements ISignInResponseDto {
         if (_data) {
             this.userId = _data["userId"];
             this.authToken = _data["authToken"];
+            this.idToken = _data["idToken"];
         }
     }
 
@@ -571,6 +679,7 @@ export class SignInResponseDto implements ISignInResponseDto {
         data = typeof data === 'object' ? data : {};
         data["userId"] = this.userId;
         data["authToken"] = this.authToken;
+        data["idToken"] = this.idToken;
         return data;
     }
 }
@@ -578,6 +687,7 @@ export class SignInResponseDto implements ISignInResponseDto {
 export interface ISignInResponseDto {
     userId?: number;
     authToken?: string | undefined;
+    idToken?: string | undefined;
 }
 
 export class UserDto implements IUserDto {
