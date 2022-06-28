@@ -6,9 +6,7 @@
   <app-button text="English" (click)="changeLanguage('en')"></app-button>
   <app-button text="Suomi" (click)="changeLanguage('fi')"></app-button>
   <div class="spacer"></div>
-  <app-button [text]="register | language: language:'register'"></app-button>
-  <app-button
-    [text]="(!signedIn ? 'Sign in' : 'Sign out') | language: language:'signin'"
-    (click)="signIn()"
-  ></app-button>
+  <app-button *ngIf="shouldShowRegisterButton()" [text]="register | language: language:'register'" (click)="navigateToRegister()"></app-button>
+  <app-button *ngIf="shouldShowSignInButton()" [text]="('Sign in') | language: language:'signin'"(click)="signIn()"></app-button>
+  <app-button *ngIf="shouldShowSignOutButton()" [text]="('Sign Out') | language: language:'signout'"(click)="signOut()"></app-button>
 </div>

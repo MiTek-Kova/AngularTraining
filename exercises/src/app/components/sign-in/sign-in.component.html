@@ -1,0 +1,30 @@
+<form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+    <div>
+        <label>Username:</label>
+        <input formControlName="username"/>
+    </div>
+    <div>
+        <label>Password:</label>
+        <input type="password" formControlName="password"/>
+    </div>
+
+
+    <div *ngIf="signInForm.invalid && signInForm.controls['username'].touched">
+        <div *ngIf="signInForm.controls['username'].errors?.['required']" class="error-message">
+            User name is required
+        </div>
+    </div>
+    <div *ngIf="signInForm.invalid && signInForm.controls['password'].touched">
+        <div *ngIf="signInForm.controls['password'].errors?.['required']" class="error-message">
+            Password is required
+        </div>
+    </div>
+
+    <div *ngIf="failed" class="error-message">
+        Failed to sign in. Please ensure the details are correct and try again.
+    </div>
+    
+    <div>
+        <button [disabled]="!signInForm.valid" type="submit">Sign in</button>
+    </div>
+</form>

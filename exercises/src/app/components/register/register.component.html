@@ -1,0 +1,50 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div>
+        <label>Username:</label>
+        <input type="text" formControlName="username"/>
+    </div>
+    <div>
+        <label>Last name:</label>
+        <input type="text" formControlName="lastname"/>
+    </div> 
+    <div>
+        <label>Password:</label>
+        <input type="password" formControlName="password"/>
+    </div> 
+    <div>
+        <label>Confirm Password:</label>
+        <input type="password" formControlName="passwordConfirmation"/>
+    </div>
+
+    <div *ngIf="registerForm.invalid && registerForm.controls['username'].touched">
+        <div *ngIf="registerForm.controls['username'].errors?.['required']" class="error-message">
+            User name is required
+        </div>
+    </div>
+    
+    <div *ngIf="registerForm.invalid && registerForm.controls['password'].touched">
+        <div *ngIf="registerForm.controls['password'].errors?.['required']" class="error-message">
+            Password is required
+        </div>
+    </div>
+    
+    <div *ngIf="registerForm.invalid && registerForm.controls['passwordConfirmation'].touched">
+        <div *ngIf="registerForm.controls['passwordConfirmation'].errors?.['required']" class="error-message">
+            Password confirmation is required
+        </div>
+    </div>
+    
+    <div *ngIf="registerForm.invalid && registerForm.controls['password'].touched && registerForm.controls['passwordConfirmation'].touched">
+        <div *ngIf="registerForm.errors?.['passwordsDontMatch']" class="error-message">
+            Passwords must match
+        </div>
+    </div>
+
+    <div *ngIf="failed" class="error-message">
+        Failed to register. Please ensure that a user doesn't already exist with those details and try again.
+    </div>
+    
+    <div>
+        <button [disabled]="!registerForm.valid" type="submit">Register</button>
+    </div>
+</form>

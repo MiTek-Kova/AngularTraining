@@ -35,14 +35,40 @@ export class NavbarComponent implements OnInit {
   goHome(): void {
     this.router.navigate(['/home']);
   }
+  
+  goToSignIn(): void {
+    this.router.navigate(['/sign-in']);
+  }
+  
+  navigateToRegister(): void {
+    this.router.navigate(['/register']);
+  }
+
+  shouldShowRegisterButton(): boolean {
+    // We want to register when we are not on the registration page and are not signed in
+    return !this.signedIn && !this.router.url.includes("register");
+  }
+  
+  shouldShowSignOutButton(): boolean {
+    // We want the button to show "sign out" if we are signed in, and we want it to allow us to navigate
+    // to the sign in page if we are not on the sign in page.
+    return this.signedIn;
+  }
+  
+  shouldShowSignInButton(): boolean {
+    // We want the button to show "sign out" if we are signed in, and we want it to allow us to navigate
+    // to the sign in page if we are not on the sign in page.
+    if (this.signedIn)
+      return false;
+    return !this.router.url.includes("sign-in");
+  }
 
   signIn(): void {
-    if (this.signedIn) {
-      this.authService.logOut();
-      window.location.reload();
-    } else {
-      this.authService.login();
-      this.goHome();
-    }
+    this.goToSignIn();
+  }
+
+  signOut(): void {
+    this.authService.signOut();
+    window.location.reload();
   }
 }

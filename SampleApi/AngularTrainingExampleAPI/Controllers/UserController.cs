@@ -18,6 +18,14 @@ namespace AngularTrainingExampleAPI.Controllers
          {2, new UserDto(2, "JDoe@Test.com", "Jane", "Doe", new Address("10 Another road", "Another town", "200"), "inactive", Month.Aug)},
          {3, new UserDto(3, "PMcPerson@Text.com", "Person", "McPerson", new Address("100 A street", "Another town", "300"), "active", Month.Dec)},
       };
+
+      // In reality, we definitely -definitely- wouldn't store passwords this way
+      public static readonly Dictionary<int, string> Passwords = new()
+      {
+         { 1, "password" },
+         { 2, "password" },
+         { 3, "password" },
+      };
       
       /// <summary>
       /// Returns the details about a given user
@@ -63,6 +71,7 @@ namespace AngularTrainingExampleAPI.Controllers
       public ActionResult DeleteUser(int userId)
       {
          bool removedUser = Users.Remove(userId);
+         Passwords.Remove(userId);
          return removedUser 
             ? Ok() 
             : NotFound();
@@ -83,6 +92,10 @@ namespace AngularTrainingExampleAPI.Controllers
             return BadRequest();
 
          Users[user.userId] = user;
+         
+         // Give them the default password
+         Passwords.Add(user.userId, "password");
+         
          return Ok();
       }
       

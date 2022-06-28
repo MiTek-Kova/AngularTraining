@@ -12,7 +12,9 @@ export class AdminUserlistComponent implements OnInit {
 
   constructor(private userService: UserService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.users = this.userService.getUsers();
+  }
 
   onAddUser(userData: Omit<User, 'id'>) {
     this.userService.addUser(userData);

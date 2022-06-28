@@ -26,8 +26,8 @@ export class UserService {
   
   private static convertDtoToDomain(user: UserDto): User | null {
     // We need a complete user
-    if (!user.userId || !user.username || !user.status || !user.lastName || !user.address
-       || !user.address.firstLine || !user.address.secondLine || !user.address.postOrZipCode || user.birthMonth === undefined)
+    if (!user.userId || !user.username || !user.status || user.lastName === undefined || !user.address
+       || user.address.firstLine === undefined || user.address.secondLine === undefined || user.address.postOrZipCode === undefined || user.birthMonth === undefined)
       return null;
 
     return {

@@ -34,19 +34,12 @@ namespace AngularTrainingExampleAPI.Controllers
       {
          UserDto matchingUser = UserController.Users.Values.FirstOrDefault(u => u.username == signInRequest.username);
 
-         if (signInRequest.password != "password" || matchingUser == null)
+         if (matchingUser == null || signInRequest.password != UserController.Passwords[matchingUser.userId])
             return Unauthorized();
          
-         // Generate an Access and an ID token
-         var standardClaims = jwtFactory.GetStandardClaimsFromJwtOptions().Result;
-         var claims = new List<Claim>() {new Claim("email", matchingUser.email)};
-         claims.AddRange(standardClaims);
-         var accessToken = jwtFactory.GenerateEncodedToken(matchingUser.userId.ToString(), matchingUser.username, claims, DateTime.Now.AddHours(2));
-         var idToken = jwtFactory.GenerateEncodedToken(matchingUser.userId.ToString(), matchingUser.username, standardClaims, DateTime.Now.AddDays(14));
-         
-         return new SignInResponseDto(matchingUser.userId, accessToken.Token, idToken.Token);
+         return GenerateTokensForUser(matchingUser);
       }
-      
+
       /// <summary>
       /// Provides an up to date Auth token, based on an ID/Refresh token
       /// </summary>
@@ -64,12 +57,49 @@ namespace AngularTrainingExampleAPI.Controllers
             return Unauthorized();
          
          // Generate an Access and an ID token
-         var accessToken = jwtFactory.GenerateEncodedToken(matchingUser.userId.ToString(), matchingUser.username, new List<Claim>(){new Claim("email", matchingUser.email)}, DateTime.Now.AddHours(2));
-         var idToken = jwtFactory.GenerateEncodedToken(matchingUser.userId.ToString(), matchingUser.username, new List<Claim>(), DateTime.Now.AddDays(14));
+         return GenerateTokensForUser(matchingUser);
+      }
+      
+      /// <summary>
+      /// Registers a user with the given details and signs in as that user.
+      /// Note: Does not do any confirmation of email or anything like that
+      /// </summary>
+      [HttpPost("Register")]
+      [ProducesResponseType(StatusCodes.Status200OK)]
+      [ProducesResponseType(StatusCodes.Status400BadRequest)]
+      [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+      public ActionResult<SignInResponseDto> Register(RegisterRequestDto registerRequest)
+      {
+         // Check if the user exists already
+         if (UserController.Users.Any(u => u.Value.username == registerRequest.username))
+            return BadRequest();
+
+         int newId = UserController.Users.Any() ? UserController.Users.Keys.Max() + 1 : 1;
+         UserDto newUser = new UserDto(newId, "", registerRequest.username, registerRequest.lastName,
+            new Address("", "", ""), "active", Month.Jan);
+
+         UserController.Users[newId] = newUser;
+         UserController.Passwords[newId] = registerRequest.password;
+
+         return GenerateTokensForUser(newUser);
+      }
+      
+      private ActionResult<SignInResponseDto> GenerateTokensForUser(UserDto matchingUser)
+      {
+         // Generate an Access and an ID token
+         var standardClaims = jwtFactory.GetStandardClaimsFromJwtOptions().Result;
+         var claims = new List<Claim>()
+         {
+            new Claim("email", matchingUser.email),
+            new Claim("name", matchingUser.username)
+         };
+         claims.AddRange(standardClaims);
+         var accessToken = jwtFactory.GenerateEncodedToken(matchingUser.userId.ToString(), matchingUser.username, claims,
+            DateTime.Now.AddHours(2));
+         var idToken = jwtFactory.GenerateEncodedToken(matchingUser.userId.ToString(), matchingUser.username, standardClaims,
+            DateTime.Now.AddDays(14));
 
          return new SignInResponseDto(matchingUser.userId, accessToken.Token, idToken.Token);
       }
-      
-      
    }
 }

@@ -14,7 +14,11 @@ import { UserService } from "./services/user.service";
 import { HomeComponent } from "./components/home/home.component";
 import { LanguagePipe } from './pipes/language.pipe';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {CookieService} from "ngx-cookie-service";
+import { SignInComponent } from './components/sign-in/sign-in.component';
+import {AuthTokenInterceptor} from "./interceptors/auth-token.interceptor";
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -27,15 +31,25 @@ import {HttpClientModule} from "@angular/common/http";
     UserDetailsComponent,
     ErrorComponent,
     HomeComponent,
-    LanguagePipe
+    LanguagePipe,
+    SignInComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
-  providers: [UserService],
+  providers: [
+     UserService,
+     CookieService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthTokenInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

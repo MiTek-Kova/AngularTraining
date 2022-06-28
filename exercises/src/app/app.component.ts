@@ -23,7 +23,10 @@ export class AppComponent {
     private readonly langService: LanguageService
   ) {
     this.authService.isLoggedIn$.subscribe(
-      (isLoggedIn) => (this.signedIn = isLoggedIn)
+      (isLoggedIn) => {
+        this.signedIn = isLoggedIn;
+        this.name = this.authService.getNameClaim();
+      }
     );
     this.langService.language$.subscribe(
       (language) => (this.language = language)

@@ -6,11 +6,15 @@ import { UserDetailsComponent } from "./components/user-details/user-details.com
 import { AuthGuard } from "./guards/auth.guard";
 import { UserListGuard } from "./guards/user-list.guard";
 import { HomeComponent } from "./components/home/home.component";
+import {SignInComponent} from "./components/sign-in/sign-in.component";
+import {RegisterComponent} from "./components/register/register.component";
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
   { path: 'user-list', component: AdminUserlistComponent, canActivate: [AuthGuard], canDeactivate: [UserListGuard]},
   { path: 'user-details/:userId', component: UserDetailsComponent, canActivate: [AuthGuard]},
+  { path: 'register', component: RegisterComponent },
+  { path: 'sign-in', component: SignInComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full'},
   { path: '**', component: ErrorComponent }
 ]
