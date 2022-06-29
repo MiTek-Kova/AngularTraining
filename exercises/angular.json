@@ -33,6 +33,11 @@
           },
           "configurations": {
             "production": {
+              "outputPath": "myangularapp",
+              "buildOptimizer": true,
+              "optimization": true,
+              "sourceMap": false,
+              "namedChunks": false,
               "budgets": [
                 {
                   "type": "initial",

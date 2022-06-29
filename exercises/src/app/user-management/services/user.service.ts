@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {User} from '../models/user';
-import {environment} from "../../environments/environment";
-import {Address, MyUserApiClient, UserDto} from "../api/myUserApi.service";
 import {HttpClient} from "@angular/common/http";
+import {User} from "../../models/user";
+import {Address, MyUserApiClient, UserDto} from "../../api/myUserApi.service";
+import {environment} from "../../../environments/environment";
 
 @Injectable()
 export class UserService {

@@ -9,7 +9,7 @@
 <div *ngFor="let user of users" appSelectedUser [highlightColor]="'dodgerblue'">
   <hr />
   <div>
-    <b [routerLink]="['/user-details', user.id]">
+    <b [routerLink]="['/user-management/user-details', user.id]">
       Username: {{ user.username }}
     </b>
     &nbsp;&nbsp;&nbsp;

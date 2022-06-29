@@ -43,6 +43,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   goToUsers() {
-    this.router.navigate(['/user-list']);
+    this.router.navigate(['/user-management/user-list']);
   }
 }

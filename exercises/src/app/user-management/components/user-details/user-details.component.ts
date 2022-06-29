@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Months, User } from '../../models/user';
-import { UserService } from '../../services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { noAdminValidator } from '../../validators/no-admin.validator';
+import {Months, User} from "../../../models/user";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-user-details',
@@ -49,7 +49,7 @@ export class UserDetailsComponent implements OnInit {
   }
 
   goBackToUserList(): void {
-    this.router.navigate(['/user-list']);
+    this.router.navigate(['/user-management/user-list']);
   }
 
   toggleStatus(): void {

@@ -1,19 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from "@angular/router";
-import { AdminUserlistComponent } from "./components/admin-userlist/admin-userlist.component";
 import { ErrorComponent } from "./components/error/error.component";
-import { UserDetailsComponent } from "./components/user-details/user-details.component";
 import { AuthGuard } from "./guards/auth.guard";
-import { UserListGuard } from "./guards/user-list.guard";
 import { HomeComponent } from "./components/home/home.component";
 import {SignInComponent} from "./components/sign-in/sign-in.component";
-import {RegisterComponent} from "./components/register/register.component";
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
-  { path: 'user-list', component: AdminUserlistComponent, canActivate: [AuthGuard], canDeactivate: [UserListGuard]},
-  { path: 'user-details/:userId', component: UserDetailsComponent, canActivate: [AuthGuard]},
-  { path: 'register', component: RegisterComponent },
+  { path: 'user-management', loadChildren: () => import('./user-management/user-management.module').then(m => m.UserManagementModule)},
+  { path: 'register', loadChildren: () => import('./registration/registration.module').then(m => m.RegistrationModule) },
   { path: 'sign-in', component: SignInComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full'},
   { path: '**', component: ErrorComponent }
